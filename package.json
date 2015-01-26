@@ -1,0 +1,90 @@
+{
+  "name": "NiceJS",
+  "version": "0.0.0",
+  "contributors": [
+    {
+        "name": "Carl Banbury",
+        "email": "carl@banbury.ch"
+    },
+    {
+        "name": "David Roberts",
+        "email": ""
+    },
+    {
+        "name": "Jon Burgess",
+        "email": ""
+    }
+  ],
+  "engines": {
+    "node": "0.10.x",
+    "npm": "1.4.x"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "test": "grunt test",
+    "postinstall": "bower update"
+  },
+  "dependencies": {
+    "angular-route": "^1.3.8",
+    "body-parser": "~1.8.1",
+    "cookie-parser": "~1.3.3",
+    "express": "~4.9.0",
+    "express-graceful-exit": "^0.1.0",
+    "express-jwt": "^0.6.2",
+    "express-session": "^1.9.3",
+    "jade": "^1.8.1",
+    "jsonwebtoken": "^3.2.1",
+    "lodash": "^2.4.1",
+    "mongoose": "^3.8.21",
+    "morgan": "~1.3.0",
+    "newrelic": "^1.14.2",
+    "passport": "^0.2.1",
+    "passport-local": "^1.0.0",
+    "passport-local-mongoose": "^1.0.0",
+    "serve-favicon": "~2.1.3",
+    "stylus": "0.42.3"
+  },
+  "devDependencies": {
+    "angular-mocks": "^1.3.9",
+    "chai": "^1.10.0",
+    "fs": "0.0.2",
+    "grunt": "^0.4.5",
+    "grunt-contrib-jshint": "^0.10.0",
+    "grunt-contrib-watch": "^0.6.1",
+    "grunt-env": "^0.4.2",
+    "grunt-exec": "^0.4.6",
+    "grunt-express-server": "^0.4.19",
+    "grunt-karma": "^0.10.1",
+    "grunt-mocha-istanbul": "^2.2.0",
+    "grunt-mocha-test": "^0.12.4",
+    "grunt-protractor-runner": "^1.1.4",
+    "grunt-protractor-webdriver": "^0.2.0",
+    "grunt-sauce-tunnel": "^0.2.1",
+    "grunt-shell-spawn": "^0.3.1",
+    "istanbul": "^0.3.5",
+    "jshint-stylish": "^1.0.0",
+    "karma": "^0.12.31",
+    "karma-chai": "^0.1.0",
+    "karma-chrome-launcher": "^0.1.7",
+    "karma-coverage": "^0.2.7",
+    "karma-mocha": "^0.1.10",
+    "karma-phantomjs-launcher": "^0.1.4",
+    "karma-sinon": "^1.0.4",
+    "karma-sinon-chai": "^0.2.0",
+    "karma-spec-reporter": "0.0.16",
+    "karma-threshold-reporter": "^0.1.12",
+    "load-grunt-tasks": "^1.0.0",
+    "mocha": "^2.0.1",
+    "phantomjs": "^1.9.13",
+    "protractor": "^1.6.1",
+    "protractor-screenshot-reporter": "0.0.5",
+    "proxyquire": "^1.1.0",
+    "rewire": "^2.1.3",
+    "selenium-server": "2.43.0",
+    "selenium-webdriver": "^2.44.0",
+    "sinon": "^1.12.1",
+    "sinon-chai": "^2.6.0",
+    "supertest": "^0.15.0",
+    "supertest-chai": "0.0.8"
+  }
+}

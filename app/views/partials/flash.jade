@@ -1,0 +1,15 @@
+div.alert.alert-success(ng-show="flash.success" flash-alert="success" active-class="in" duration="0")
+    span.glyphicon.glyphicon-ok &nbsp;
+    span {{ flash.success | translate }}
+
+div.alert.alert-info(ng-show="flash.info" flash-alert="info" active-class="in" duration="0")
+    span.glyphicon.glyphicon-info-sign &nbsp;
+    span {{ flash.info | translate }}
+
+div.alert.alert-warning(ng-show="flash.warning" flash-alert="warn" active-class="in" duration="0")
+    span.glyphicon.glyphicon-warning-sign &nbsp;
+    span {{ flash.warning | translate }}
+
+div.alert.alert-danger(ng-show="flash.error" flash-alert="error" active-class="in" duration="0")
+    span.glyphicon.glyphicon-remove &nbsp;
+    span {{ flash.error | translate }}

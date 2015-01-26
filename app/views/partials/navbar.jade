@@ -1,0 +1,29 @@
+.navbar.navbar-inverse.navbar-static-top
+  .container
+    .navbar-header
+      button.navbar-toggle(type='button', data-toggle='collapse', data-target='.navbar-collapse')
+        span.icon-bar
+        span.icon-bar
+        span.icon-bar
+      a.navbar-brand(href='/') 
+        img(src='/img/brand/logo.png', alt='NiceJS')
+    .navbar-collapse.collapse
+      ul.nav.navbar-nav.navbar-right(data-ng-show="token")
+          li.dropdown
+            a.dropdown-toggle(id='navbarSetting', href='', data-toggle='dropdown')
+              span.glyphicon.glyphicon-cog
+            ul.dropdown-menu( id='navbarSettingDropdown', role='menu', aria-labelledby='dropdownMenu1')
+              li.dropdown-header(role='presentation')= 'Logged in as'
+              li.dropdown-header(role='presentation') {{ user.username }}
+              li.divider(role='presentation')
+              li
+                a(id='navbarProfile', role='menuitem', tabindex='-1', href='#/profile')= 'Profile'
+                a(id='navbarChangePassword', role='menuitem', tabindex='-1', href='#/change-password')= 'Change Password'
+              li.divider(role='presentation')
+              li(data-ng-controller="LogoutController")
+                a(id='navbarLogout', role='menuitem', tabindex='-1', href='', ng-click="logout()")= 'Logout'
+      ul.nav.navbar-nav.navbar-right(data-ng-hide="token")
+          li
+            a(id='navbarSignup', href='#/register')= 'Register'
+          li
+            a(id='navbarLogin', href='#/login')= 'Login'

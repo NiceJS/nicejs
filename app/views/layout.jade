@@ -1,0 +1,39 @@
+doctype html
+html
+  head
+    title= title
+    base(href="/")
+
+    link(rel='icon', type='image/png', href='/img/brand/favicon.ico')
+
+    link(rel='stylesheet', href='/lib/bootstrap/dist/css/bootstrap.min.css')
+    link(rel='stylesheet', href='/css/style.css')
+
+    //- Angular Base
+    script(src='lib/angular/angular.min.js')
+    script(src='lib/angular-route/angular-route.min.js')
+
+    //- Angular Plugins
+    script(src='lib/angular-flash/dist/angular-flash.min.js')
+    script(src="lib/angular-translate/angular-translate.js")
+    script(src="lib/angular-translate-loader-static-files/angular-translate-loader-static-files.js")
+    script(src="lib/angular-simple-storage/dist/angular-simpleStorage.min.js")
+
+    //- Angular Modules
+    script(src="app/modules/Root.js")
+    script(src="app/modules/Users.js")
+    script(src="app/modules/AuthInterceptor.js")
+
+    //- Angluar Routes and App Registration
+    script(src="app/appRoutes.js")
+    script(src="app/app.js")
+
+  body(ng-app="nicejs" ng-controller="RootController")
+    
+    include ./partials/navbar.jade
+    .container
+      .row
+        .col-sm-12(ng-view)
+
+    script(src='/lib/jquery/dist/jquery.min.js')
+    script(src='/lib/bootstrap/dist/js/bootstrap.min.js')

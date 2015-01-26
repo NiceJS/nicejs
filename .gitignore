@@ -1,0 +1,13 @@
+data/*
+node_modules/*
+public/lib/*
+public/css/**/*.css
+tests/coverage/*
+tests/functional/frontend/test_output/*
+npm-debug.log
+*.log
+*.ipc
+*.pid
+*.idea/
+*.vagrant/
+*.DS_Store

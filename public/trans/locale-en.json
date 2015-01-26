@@ -1,0 +1,112 @@
+{
+    "index": {
+        "title": "NiceJS"
+    },
+    "register": {
+        "title": "Register",
+        "message": {
+            "success": "You have successfully registered",
+            "error": {
+                "password": "Passwords do not match",
+                "database": "Error saving user"
+            }
+        },
+        "form": {
+            "input": {
+                "username": "Username",
+                "password": "Password",
+                "repeat_password": "Confirm Password"
+            },
+            "button": {
+                "submit": "Register"
+            },
+            "error": {
+                "username": {
+                    "required": "Username is required",
+                    "email": "Username must be an email"
+                },
+                "password": {
+                    "required": "Password is required",
+                    "minlength": "Password must be more than 6 characters"
+                },
+                "repeat_password": {
+                    "required": "Confirm Password is required",
+                    "minlength": "Confirm Password must be more than 6 characters"
+                }
+            }
+        }
+    },
+    "login": {
+        "title": "Login",
+        "message": {
+            "success": "You are now logged in",
+            "error":{
+                "user": "Login failed, Please try again",
+                "database": "Error logging in"
+            }
+        },
+        "form": {
+            "input": {
+                "username": "Username",
+                "password": "Password"
+            },
+            "button": {
+                "submit": "Login"
+            },
+            "error": {
+                "username": {
+                    "required": "Username is required",
+                    "email": "Username must be an email"
+                },
+                "password": {
+                    "required": "Password is required",
+                    "minlength": "Password must be more than 6 characters"
+                }
+            }
+        }
+    },
+    "logout": {
+        "message": {
+            "success": "You have been logged out"
+        }
+    },
+    "profile": {
+        "title": "Profile"
+    },
+    "changepassword": {
+        "title": "Change Password",
+        "message": {
+            "success": "Your password has been updated",
+            "error": {
+                "user": "Current password incorrect",
+                "matchpassword": "Password mismatch, please try again",
+                "database": "Error updating password"
+            }
+        },
+        "form": {
+            "input": {
+                "password": "Current Password",
+                "new_password": "New Password",
+                "repeat_password": "Confirm New Password"
+            },
+            "button": {
+                "submit": "Change Password",
+                "cancel": "Cancel"
+            },
+            "error": {
+                "password": {
+                    "required": "Password is required",
+                    "minlength": "Password must be more than 6 characters"
+                },
+                "new_password": {
+                    "required": "New Password is required",
+                    "minlength": "New Password must be more than 6 characters"
+                },
+                "repeat_password": {
+                    "required": "Confirm Password is required",
+                    "minlength": "Confirm Password must be more than 6 characters"
+                }
+            }
+        }
+    }
+}

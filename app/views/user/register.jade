@@ -1,0 +1,32 @@
+div
+
+  h2.page-header.form-signin-heading {{ 'register.title' | translate }}
+
+  include ../partials/flash.jade
+  
+  form.form-horizontal(ng-controller="RegisterController", name='registerForm', role='form' novalidate)
+    
+    div.form-group
+      label.col-sm-2.control-label {{ 'register.form.input.username' | translate }}
+      div.col-sm-10
+        input.form-control(ng-model='user.username', name="username", type="email", placeholder='Enter Email Address' required)
+        span.text-danger(ng-show='registerForm.username.$dirty && registerForm.username.$error.required') {{ 'register.form.error.username.required' | translate }}
+        span.text-danger(ng-show='registerForm.username.$dirty && registerForm.username.$error.email')  {{ 'register.form.error.username.email' | translate }}
+    
+    div.form-group
+      label.col-sm-2.control-label {{ 'register.form.input.password' | translate }}
+      div.col-sm-10
+        input.form-control(ng-model='user.password', name="password", type="password", ng-minlength='6', placeholder='Password' required)
+        span.text-danger(ng-show='registerForm.password.$dirty && registerForm.password.$error.required') {{ 'register.form.error.password.required' | translate }}
+        span.text-danger(ng-show='registerForm.password.$dirty && registerForm.password.$error.minlength') {{ 'register.form.error.password.minlength' | translate }}
+        
+    div.form-group
+      label.col-sm-2.control-label {{ 'register.form.input.repeat_password' | translate }}
+      div.col-sm-10
+        input.form-control(ng-model='user.repeat_password', name="repeat_password", type="password", ng-minlength='6', placeholder='Password' required)
+        span.text-danger(ng-show='registerForm.repeat_password.$dirty && registerForm.repeat_password.$error.required') {{ 'register.form.error.repeat_password.required' | translate }}
+        span.text-danger(ng-show='registerForm.repeat_password.$dirty && registerForm.repeat_password.$error.minlength') {{ 'register.form.error.repeat_password.minlength' | translate }}
+        
+    div.form-group
+      div.col-sm-offset-2.col-sm-10
+        button.btn.btn-primary(ng-click="register(user)", name="registerBtn", ng-disabled="registerForm.$invalid") {{ 'register.form.button.submit' | translate }}

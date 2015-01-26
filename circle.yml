@@ -1,0 +1,9 @@
+dependencies:
+  pre:
+    - npm install istanbul -g
+    - npm install
+    - grunt lint
+
+general:
+  artifacts:
+    - "tests/coverage"
