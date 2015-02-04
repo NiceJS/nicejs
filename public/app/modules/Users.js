@@ -3,9 +3,8 @@
 
 var users = angular.module('Users', []);
 
-users.controller('RegisterController', function($scope, $location, $route, $session, $flash, UserService) {
+users.controller('RegisterController', function($scope, $state, $session, $flash, UserService) {
   $scope.register = function(user) {
-    //console.log(UserService.register({}).then())
     UserService
       .register(user)
         .then(
@@ -13,17 +12,17 @@ users.controller('RegisterController', function($scope, $location, $route, $sess
             $session.set('token', result.data.token);
             $session.set('user', {username: user.username});
             $flash.set('success', 'register.message.success');
-            $location.path('/');
+            $state.go('home');
           },
           function (result) {
             $flash.set('error', 'register.message.error.' + result.data.message);
-            $route.reload();
+            $state.reload();
           }
         );
   };
 });
 
-users.controller('LoginController', function($scope, $location, $route, $session, $flash, UserService) {
+users.controller('LoginController', function($scope, $state, $session, $flash, UserService) {
   $scope.login = function(user) {
     UserService
       .login(user)
@@ -32,28 +31,27 @@ users.controller('LoginController', function($scope, $location, $route, $session
             $session.set('token', result.data.token);
             $session.set('user', {username: user.username});
             $flash.set('success', 'login.message.success');
-            $location.path('/');
+            $state.go('home');
           },
           function(result){
             $flash.set('error', 'login.message.error.' + result.data.message);
-            $route.reload();
+            $state.reload();
           }
         );
   };
 });
 
-users.controller('LogoutController', function($scope, $location, $session, $flash, $route) {
+users.controller('LogoutController', function($scope, $session, $flash, $state) {
   $scope.logout = function() {
     $session.remove('token');
     $session.remove('user');
     $flash.set('info', 'logout.message.success');
-    $location.path('/');
-    $route.reload();
+    $state.go();
   };
 });
 
 // TODO: this needs to have authentication service on it.
-users.controller('ChangePasswordController', function($scope, $location, $session, $flash, $route, UserService) {
+users.controller('ChangePasswordController', function($scope, $session, $flash, $state, UserService) {
   $scope.changePassword = function(changePasswordData) {
     UserService
       .changePassword(changePasswordData)
@@ -61,11 +59,11 @@ users.controller('ChangePasswordController', function($scope, $location, $sessio
           function(result) {
             $session.set('token', result.data.token);
             $flash.set('info', 'changepassword.message.success');
-            $route.reload();
+            $state.reload();
           },
           function(result) {
             $flash.set('error', 'changepassword.message.error.' + result.data.message);
-            $route.reload();
+            $state.reload();
           }
         );
   };

@@ -63,7 +63,7 @@ describe('Root module', function () {
       // Arrange
 
       // Act
-      rootScope.$broadcast('$routeChangeSuccess');
+      rootScope.$broadcast('$stateChangeSuccess');
 
       // Assert
       expect(sessionGetStub).to.have.been.calledWithExactly('token');
@@ -73,7 +73,7 @@ describe('Root module', function () {
       // Arrange
 
       // Act
-      rootScope.$broadcast('$routeChangeSuccess');
+      rootScope.$broadcast('$stateChangeSuccess');
 
       // Assert
       expect(scope.token).to.equal(tokenResponse);
@@ -83,7 +83,7 @@ describe('Root module', function () {
       // Arrange
 
       // Act
-      rootScope.$broadcast('$routeChangeSuccess');
+      rootScope.$broadcast('$stateChangeSuccess');
 
       // Assert
       expect(sessionGetStub).to.have.been.calledWithExactly('user');
@@ -93,7 +93,7 @@ describe('Root module', function () {
       // Arrange
 
       // Act
-      rootScope.$broadcast('$routeChangeSuccess');
+      rootScope.$broadcast('$stateChangeSuccess');
 
       // Assert
       expect(scope.user).to.equal(userResponse);
@@ -103,7 +103,7 @@ describe('Root module', function () {
       // Arrange
 
       // Act
-      rootScope.$broadcast('$routeChangeSuccess');
+      rootScope.$broadcast('$stateChangeSuccess');
 
       // Assert
       expect(flashGetStub).to.have.been.calledWithExactly('success');
@@ -113,7 +113,7 @@ describe('Root module', function () {
       // Arrange
 
       // Act
-      rootScope.$broadcast('$routeChangeSuccess');
+      rootScope.$broadcast('$stateChangeSuccess');
 
       // Assert
       expect(scope.flash.success).to.equal(successResponse);
@@ -123,7 +123,7 @@ describe('Root module', function () {
       // Arrange
 
       // Act
-      rootScope.$broadcast('$routeChangeSuccess');
+      rootScope.$broadcast('$stateChangeSuccess');
 
       // Assert
       expect(flashGetStub).to.have.been.calledWithExactly('info');
@@ -133,7 +133,7 @@ describe('Root module', function () {
       // Arrange
 
       // Act
-      rootScope.$broadcast('$routeChangeSuccess');
+      rootScope.$broadcast('$stateChangeSuccess');
 
       // Assert
       expect(scope.flash.info).to.equal(infoResponse);
@@ -143,7 +143,7 @@ describe('Root module', function () {
       // Arrange
 
       // Act
-      rootScope.$broadcast('$routeChangeSuccess');
+      rootScope.$broadcast('$stateChangeSuccess');
 
       // Assert
       expect(flashGetStub).to.have.been.calledWithExactly('warning');
@@ -153,7 +153,7 @@ describe('Root module', function () {
       // Arrange
 
       // Act
-      rootScope.$broadcast('$routeChangeSuccess');
+      rootScope.$broadcast('$stateChangeSuccess');
 
       // Assert
       expect(scope.flash.warning).to.equal(warningResponse);
@@ -163,7 +163,7 @@ describe('Root module', function () {
       // Arrange
 
       // Act
-      rootScope.$broadcast('$routeChangeSuccess');
+      rootScope.$broadcast('$stateChangeSuccess');
 
       // Assert
       expect(flashGetStub).to.have.been.calledWithExactly('error');
@@ -173,7 +173,7 @@ describe('Root module', function () {
       // Arrange
 
       // Act
-      rootScope.$broadcast('$routeChangeSuccess');
+      rootScope.$broadcast('$stateChangeSuccess');
 
       // Assert
       expect(scope.flash.error).to.equal(errorResponse);

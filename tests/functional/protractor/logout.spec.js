@@ -1,6 +1,6 @@
 'use strict';
 
-// profile.js
+// logout.js
 var mongoose = require('mongoose');
 var _db;
 var _users;
@@ -13,7 +13,7 @@ var correctUser = {
     salt: '2e6cb68958c9199563e3a19d0fa1e04caa7141f79f85072f8ab956407a66ace6'
 };
 
-describe('#Profile', function() {
+describe('#Logout', function() {
 
   beforeEach(function(done) {
     _db = mongoose.createConnection('mongodb://localhost:27017/nicejs-test');
@@ -26,35 +26,46 @@ describe('#Profile', function() {
 
         done();
     });
+
+    browser.get('http://localhost:3002/#/');
+
+    element(by.id('navbarLogin')).click();
+    element(by.css('input[name=username]')).sendKeys(correctUser.email);
+    element(by.css('input[name=password]')).sendKeys(correctPassword);
+
+    element(by.css('button[name="loginBtn"]')).click();
+
+    expect(
+      element(by.xpath('//*[contains(text(),\'You are now logged in\')]'))
+      .isPresent()
+    )
+    .toBe(true);
   });
 
   afterEach(function() {
     browser.executeScript('window.sessionStorage.clear();');
     browser.executeScript('window.localStorage.clear();');
     browser.manage().deleteAllCookies();
-    
+
     _users.drop();
     _db.close();
   });
 
-  it('should log the user in and go to the `profile` page', function() {
-    // Arrange 
-    browser.get('http://localhost:3002/#/');
-
-    element(by.id('navbarLogin')).click();
-    element(by.css('input[name=username]')).sendKeys(correctUser.email);
-    element(by.css('input[name=password]')).sendKeys(correctPassword);
-    
-    element(by.css('button[name="loginBtn"]')).click();
-
-    // Act 
+  it('should succeed to log user out correctly', function() {
+    // Arrange
     element(by.id('navbarSetting')).click();
     browser.sleep(500);
-    
-    element(by.id('navbarProfile')).click();
+
+    // Act
+    element(by.id('navbarLogout')).click();
 
     // Assert
-    expect(element(by.css('.page-header')).getText()).toEqual('Profile');
+    expect(
+      element(by.xpath('//*[contains(text(),\'You have been logged out\')]'))
+      .isPresent()
+    )
+    .toBe(true);
+
   });
 
 });

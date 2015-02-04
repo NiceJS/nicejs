@@ -1,13 +1,24 @@
-// conf.js
+'use strict';
+
+/* global jasmine */
+
+var SpecReporter = require('jasmine-spec-reporter');
+var ScreenShotReporter = require('protractor-screenshot-reporter');
+
 exports.config = {
-    sauceUser: process.env.SAUCELABS_USERNAME,
-    sauceKey: process.env.SAUCELABS_ACCESS_KEY,
-    specs: ['tests/functional/frontend/**/*.js'],
-    baseUrl: 'http://localhost:3002/#/',
-    multiCapabilities: [
-        {   'tunnel-identifier': 'saucelabs-tunnel-'+process.env.SAUCELABS_USERNAME,
-            name: 'Functional Tests on Chrome',
-            browserName: 'chrome'
-        }
-    ]
+  specs: ['tests/functional/protractor/**/*.js'],
+  baseUrl: 'http://localhost:3002/#/',
+  capabilities: {
+    'browserName': 'chrome'
+  },
+  seleniumPort: 4444,
+  onPrepare: function() {
+      jasmine.getEnv().addReporter(new SpecReporter({ displayStacktrace: true, displaySpecDuration: true }));
+      jasmine.getEnv().addReporter(new ScreenShotReporter({
+         baseDirectory: 'tests/coverage/screenshots'
+      }));
+   },
+   jasmineNodeOpts: {
+     print: function() {}
+   }
 };

@@ -14,6 +14,6 @@ var server = app.listen(app.get('port'), function () {
 /* istanbul ignore next */
 process.on('message', function (message) {
     shutdown.gracefulExit(app, server, message);
-}); 
+});
 
 module.exports = server;

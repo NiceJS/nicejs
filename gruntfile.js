@@ -5,11 +5,12 @@ module.exports = function (grunt) {
     var watchFiles = {
         serverJS: ['*.js', 'app/**/*.js', 'routes/**/*.js', 'controllers/**/*.js'],
         unitTests: ['tests/unit/mocha/**/*.js'],
-        functionalTests: ['tests/functional/server/**/*.js'],
+        functionalTests: ['tests/functional/supertest/**/*.js'],
         clientJS: ['public/app/*.js', 'public/app/**/*.js'],
         angularJS: ['public/lib/angular/*.min.js', 'node_modules/angular-mocks/angular-mocks.js'],
         karmaTests: ['tests/unit/karma/**/*.js'],
-        protractorTests: ['tests/functional/frontend/**/*.js']
+        protractorTests: ['tests/functional/protractor/**/*.js'],
+        configJS: ['config/**/*.js']
     };
 
     var allJS = watchFiles.serverJS
@@ -17,7 +18,8 @@ module.exports = function (grunt) {
         .concat(watchFiles.functionalTests)
         .concat(watchFiles.clientJS)
         .concat(watchFiles.karmaTests)
-        .concat(watchFiles.protractorTests);
+        .concat(watchFiles.protractorTests)
+        .concat(watchFiles.configJS);
 
     grunt.initConfig({
         env: {
@@ -73,7 +75,8 @@ module.exports = function (grunt) {
           xvfb: {
             command: 'Xvfb :1 -screen 5 1024x768x8',
             options: {
-              async: true
+              async: true,
+              failOnError: false
             }
           },
           run_test_server: {
@@ -156,7 +159,7 @@ module.exports = function (grunt) {
         protractor: {
           headless: {
             options: {
-              configFile: 'protractor_local.js',
+              configFile: 'protractor.js',
               keepAlive: true,
               noColor: false
             },
@@ -195,20 +198,19 @@ module.exports = function (grunt) {
         done();
     });
 
-    grunt.registerTask('default', ['forceOn','lint','test-local', 'forceOff','watch']);
+    grunt.registerTask('default', ['forceOn','lint','test', 'forceOff','watch']);
 
     grunt.registerTask('lint', ['jshint']);
 
-    grunt.registerTask('test', ['env:test', 'test-mocha', 'test-supertest', 'test-karma', 'test-protractor-local']);
+    grunt.registerTask('test', ['env:test', 'test-mocha', 'test-supertest', 'test-karma', 'test-protractor']);
 
     grunt.registerTask('test-unit', ['env:test', 'test-mocha', 'test-karma']);
     grunt.registerTask('test-functional', ['env:test', 'test-supertest', 'test-protractor']);
-    grunt.registerTask('test-functional', ['env:test', 'test-supertest', 'test-protractor-local']);
 
     grunt.registerTask('test-mocha', ['env:test', 'mocha_istanbul:coverage']);
-    grunt.registerTask('test-supertest', ['env:test', 'mochaTest:functional']);
     grunt.registerTask('test-karma', ['env:test', 'karma:unit']);
 
-    grunt.registerTask('test-protractor', ['env:test', 'sauce_tunnel','express:test','protractor:saucelabs','sauce_tunnel_stop']);
-    grunt.registerTask('test-protractor-local', ['shell:protractor_webdriver_manager_update','shell:xvfb', 'env:xvfb', 'shell:run_test_server', 'protractor:headless', 'shell:xvfb:kill', 'shell:run_test_server:kill']);
+    grunt.registerTask('test-supertest', ['env:test', 'mochaTest:functional']);
+    grunt.registerTask('test-protractor', ['shell:protractor_webdriver_manager_update','shell:xvfb', 'env:xvfb',
+                                           'shell:run_test_server', 'protractor:headless', 'shell:xvfb:kill', 'shell:run_test_server:kill']);
 };

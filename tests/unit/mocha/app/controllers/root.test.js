@@ -44,7 +44,7 @@ describe('#wildcard', function () {
 		spy = sinon.spy();
 
         req = {
-        	path: '/wildcard'
+        	path: '/views/wildcard'
         };
 		res = {
             render: spy

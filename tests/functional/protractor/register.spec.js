@@ -25,22 +25,22 @@ describe('#Register', function() {
   });
 
   it('should have a title of `Register`', function() {
-    // Arrange 
+    // Arrange
 
-    // Act 
+    // Act
 
     // Assert
     expect(element(by.css('.page-header')).getText()).toEqual('Register');
   });
 
   it('should fail to sign user up if their passwords do not match', function() {
-    // Arrange 
+    // Arrange
 
-    // Act 
+    // Act
     element(by.css('input[name=username]')).sendKeys('protractor1@protractor1');
     element(by.css('input[name=password]')).sendKeys('qwerty');
     element(by.css('input[name=repeat_password]')).sendKeys('wrongPassword');
-    
+
     element(by.css('button[name="registerBtn"]')).click();
 
     // Assert
@@ -53,13 +53,13 @@ describe('#Register', function() {
   });
 
   it('should sign user up successfully if credentials are filled in correctly', function() {
-    // Arrange 
+    // Arrange
 
-    // Act 
+    // Act
     element(by.css('input[name=username]')).sendKeys('protractor2@protractor2');
     element(by.css('input[name=password]')).sendKeys('qwerty');
     element(by.css('input[name=repeat_password]')).sendKeys('qwerty');
-    
+
     element(by.css('button[name="registerBtn"]')).click();
 
     // Assert

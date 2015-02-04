@@ -3,16 +3,16 @@
   "version": "0.0.0",
   "contributors": [
     {
-        "name": "Carl Banbury",
-        "email": "carl@banbury.ch"
+      "name": "Carl Banbury",
+      "email": "carl@banbury.ch"
     },
     {
-        "name": "David Roberts",
-        "email": ""
+      "name": "David Roberts",
+      "email": ""
     },
     {
-        "name": "Jon Burgess",
-        "email": ""
+      "name": "Jon Burgess",
+      "email": ""
     }
   ],
   "engines": {
@@ -62,6 +62,7 @@
     "grunt-sauce-tunnel": "^0.2.1",
     "grunt-shell-spawn": "^0.3.1",
     "istanbul": "^0.3.5",
+    "jasmine-spec-reporter": "^1.1.2",
     "jshint-stylish": "^1.0.0",
     "karma": "^0.12.31",
     "karma-chai": "^0.1.0",

@@ -10,7 +10,7 @@ exports.internalError = function(environment) {
     // development error handler
     // will print stacktrace
     if (environment === 'development') {
-        return function (err, req, res, next) {
+        return function (err, req, res) {
             res.status(err.status || 500);
             res.render('error', {
                 message: err.message,
@@ -20,7 +20,7 @@ exports.internalError = function(environment) {
     }
     // production error handler
     // no stacktraces leaked to user
-    return function (err, req, res, next) {
+    return function (err, req, res) {
         res.status(err.status || 500);
         res.render('error', {
             message: err.message,

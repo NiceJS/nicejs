@@ -1,6 +1,6 @@
 'use strict';
 
-// logout.js
+// login.js
 var mongoose = require('mongoose');
 var _db;
 var _users;
@@ -13,7 +13,7 @@ var correctUser = {
     salt: '2e6cb68958c9199563e3a19d0fa1e04caa7141f79f85072f8ab956407a66ace6'
 };
 
-describe('#Logout', function() {
+describe('#Login', function() {
 
   beforeEach(function(done) {
     _db = mongoose.createConnection('mongodb://localhost:27017/nicejs-test');
@@ -28,18 +28,7 @@ describe('#Logout', function() {
     });
 
     browser.get('http://localhost:3002/#/');
-
     element(by.id('navbarLogin')).click();
-    element(by.css('input[name=username]')).sendKeys(correctUser.email);
-    element(by.css('input[name=password]')).sendKeys(correctPassword);
-    
-    element(by.css('button[name="loginBtn"]')).click();
-
-    expect(
-      element(by.xpath('//*[contains(text(),\'You are now logged in\')]'))
-      .isPresent()
-    )
-    .toBe(true);
   });
 
   afterEach(function() {
@@ -51,17 +40,60 @@ describe('#Logout', function() {
     _db.close();
   });
 
-  it('should succeed to log user out correctly', function() {
-    // Arrange 
-    element(by.id('navbarSetting')).click();
-    browser.sleep(500);
+  it('should have a title of `Login`', function() {
+    // Arrange
 
-    // Act 
-    element(by.id('navbarLogout')).click();
+    // Act
 
     // Assert
+    browser.wait(function () {
+      return element(by.css('.page-header'))
+            .isPresent();
+    }, 500000);
+
+    expect(element(by.css('.page-header')).getText()).toEqual('Login');
+  });
+
+  it('should fail to login user if credentials are incorrect', function() {
+    // Arrange
+
+    // Act
+    element(by.css('input[name=username]')).sendKeys(correctUser.email);
+    element(by.css('input[name=password]')).sendKeys('wrongPassword');
+
+    element(by.css('button[name="loginBtn"]')).click();
+
+    // Assert
+    browser.wait(function () {
+      return element(by.xpath('//*[contains(text(),\'Login failed, Please try again\')]'))
+            .isPresent();
+    }, 500000);
+
     expect(
-      element(by.xpath('//*[contains(text(),\'You have been logged out\')]'))
+      element(by.xpath('//*[contains(text(),\'Login failed, Please try again\')]'))
+      .isPresent()
+    )
+    .toBe(true);
+
+  });
+
+  it('should succeed to login user if credentials are correct', function() {
+    // Arrange
+
+    // Act
+    element(by.css('input[name=username]')).sendKeys(correctUser.email);
+    element(by.css('input[name=password]')).sendKeys(correctPassword);
+
+    element(by.css('button[name="loginBtn"]')).click();
+
+    // Assert
+    browser.wait(function () {
+      return element(by.xpath('//*[contains(text(),\'You are now logged in\')]'))
+            .isPresent();
+    }, 500000);
+
+    expect(
+      element(by.xpath('//*[contains(text(),\'You are now logged in\')]'))
       .isPresent()
     )
     .toBe(true);

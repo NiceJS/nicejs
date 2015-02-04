@@ -17,13 +17,13 @@
               li.dropdown-header(role='presentation') {{ user.username }}
               li.divider(role='presentation')
               li
-                a(id='navbarProfile', role='menuitem', tabindex='-1', href='#/profile')= 'Profile'
-                a(id='navbarChangePassword', role='menuitem', tabindex='-1', href='#/change-password')= 'Change Password'
+                a(id='navbarProfile', role='menuitem', tabindex='-1', ui-sref='profile')= 'Profile'
+                a(id='navbarChangePassword', role='menuitem', tabindex='-1', ui-sref='change-password')= 'Change Password'
               li.divider(role='presentation')
               li(data-ng-controller="LogoutController")
-                a(id='navbarLogout', role='menuitem', tabindex='-1', href='', ng-click="logout()")= 'Logout'
+                a(id='navbarLogout', role='menuitem', tabindex='-1', ui-sref='home', ui-sref-opts='{reload: true}', ng-click="logout()")= 'Logout'
       ul.nav.navbar-nav.navbar-right(data-ng-hide="token")
           li
-            a(id='navbarSignup', href='#/register')= 'Register'
+            a(id='navbarSignup', ui-sref='register')= 'Register'
           li
-            a(id='navbarLogin', href='#/login')= 'Login'
+            a(id='navbarLogin', ui-sref='login')= 'Login'

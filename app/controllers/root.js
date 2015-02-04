@@ -11,10 +11,10 @@ root.index = function(req, res) {
 };
 
 /**
- * Route: *
+ * Route: /views/*
  * Method: GET
  */
-root.wildcard = function(req, res) {
-    // Remove prefixed / in path so that we render the correct dudette
-    res.render(req.path.replace('/', ''));
+root.wildcard = function(req, res) {    
+    // Remove prefixed /views/ in path so that we render the correct jade template
+    return res.render(req.path.replace('/views/', ''));
 };

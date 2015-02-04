@@ -22,7 +22,10 @@ router.post('/api/p/change-password', user.changePassword);
 
 // route to handle all angular partial requests
 router.get('/', root.index);
-router.get('*', root.wildcard);
+router.get('/views/*', root.wildcard);
+
+
+router.get('*', root.index);
 
 
 module.exports = router;

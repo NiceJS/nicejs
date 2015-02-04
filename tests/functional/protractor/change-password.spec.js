@@ -29,7 +29,7 @@ describe('#ChangePassword', function() {
         element(by.id('navbarLogin')).click();
         element(by.css('input[name=username]')).sendKeys(correctUser.email);
         element(by.css('input[name=password]')).sendKeys(correctPassword);
-        
+
         element(by.css('button[name=\'loginBtn\']')).click();
 
         expect(
@@ -53,12 +53,12 @@ describe('#ChangePassword', function() {
   });
 
   it('should log the user in and go to the `changepassword` page', function() {
-    // Arrange 
+    // Arrange
 
-    // Act 
+    // Act
     element(by.id('navbarSetting')).click();
     browser.sleep(500);
-    
+
     element(by.id('navbarChangePassword')).click();
 
     // Assert
@@ -66,12 +66,12 @@ describe('#ChangePassword', function() {
   });
 
   it('should not change the password and display error if entered passwords do not match', function() {
-    // Arrange 
+    // Arrange
 
-    // Act 
+    // Act
     element(by.id('navbarSetting')).click();
     browser.sleep(500);
-    
+
     element(by.id('navbarChangePassword')).click();
 
     expect(element(by.css('.page-header')).getText()).toEqual('Change Password');
@@ -91,12 +91,12 @@ describe('#ChangePassword', function() {
   });
 
   it('should not change the password and display error if entered incorrect old password', function() {
-    // Arrange 
+    // Arrange
 
-    // Act 
+    // Act
     element(by.id('navbarSetting')).click();
     browser.sleep(500);
-    
+
     element(by.id('navbarChangePassword')).click();
 
     expect(element(by.css('.page-header')).getText()).toEqual('Change Password');
@@ -116,12 +116,12 @@ describe('#ChangePassword', function() {
   });
 
   it('should change the password and display message if credentials are correct', function() {
-    // Arrange 
+    // Arrange
 
-    // Act 
+    // Act
     element(by.id('navbarSetting')).click();
     browser.sleep(500);
-    
+
     element(by.id('navbarChangePassword')).click();
 
     expect(element(by.css('.page-header')).getText()).toEqual('Change Password');

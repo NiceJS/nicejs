@@ -24,11 +24,11 @@
     "font-awesome": "latest",
     "animate.css": "latest",
     "angular": "latest",
-    "angular-route": "latest",
     "angular-flash": "~0.1.14",
     "angular-translate": "~2.5.2",
     "angular-translate-loader-static-files": "~2.5.2",
     "simpleStorage": "~0.1.3",
-    "angular-simple-storage": "*"
+    "angular-simple-storage": "*",
+    "angular-ui-router": "~0.2.13"
   }
 }

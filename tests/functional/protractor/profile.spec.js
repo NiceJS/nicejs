@@ -1,6 +1,6 @@
 'use strict';
 
-// login.js
+// profile.js
 var mongoose = require('mongoose');
 var _db;
 var _users;
@@ -13,7 +13,7 @@ var correctUser = {
     salt: '2e6cb68958c9199563e3a19d0fa1e04caa7141f79f85072f8ab956407a66ace6'
 };
 
-describe('#Login', function() {
+describe('#Profile', function() {
 
   beforeEach(function(done) {
     _db = mongoose.createConnection('mongodb://localhost:27017/nicejs-test');
@@ -26,9 +26,6 @@ describe('#Login', function() {
 
         done();
     });
-
-    browser.get('http://localhost:3002/#/');
-    element(by.id('navbarLogin')).click();
   });
 
   afterEach(function() {
@@ -40,49 +37,25 @@ describe('#Login', function() {
     _db.close();
   });
 
-  it('should have a title of `Login`', function() {
+  it('should log the user in and go to the `profile` page', function(done) {
     // Arrange
+    browser.get('http://localhost:3002/#/');
 
-    // Act
-
-    // Assert
-    expect(element(by.css('.page-header')).getText()).toEqual('Login');
-  });
-
-  it('should fail to login user if credentials are incorrect', function() {
-    // Arrange
-
-    // Act 
-    element(by.css('input[name=username]')).sendKeys(correctUser.email);
-    element(by.css('input[name=password]')).sendKeys('wrongPassword');
-    
-    element(by.css('button[name="loginBtn"]')).click();
-
-    // Assert
-    expect(
-      element(by.xpath('//*[contains(text(),\'Login failed, Please try again\')]'))
-      .isPresent()
-    )
-    .toBe(true);
-
-  });
-
-  it('should succeed to login user if credentials are correct', function() {
-    // Arrange
-
-    // Act 
+    element(by.id('navbarLogin')).click();
     element(by.css('input[name=username]')).sendKeys(correctUser.email);
     element(by.css('input[name=password]')).sendKeys(correctPassword);
-    
-    element(by.css('button[name="loginBtn"]')).click();
-    
-    // Assert
-    expect(
-      element(by.xpath('//*[contains(text(),\'You are now logged in\')]'))
-      .isPresent()
-    )
-    .toBe(true);
 
+    element(by.css('button[name="loginBtn"]')).click();
+
+    // Act
+    element(by.id('navbarSetting')).click();
+    browser.sleep(500);
+
+    element(by.id('navbarProfile')).click();
+
+    // Assert
+    expect(element(by.css('.page-header')).getText()).toEqual('Profile');
+    done();
   });
 
 });

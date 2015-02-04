@@ -58,7 +58,7 @@ app.use(stylus.middleware({
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(session({
-    secret: 'some secret, do change ;)',
+    secret: 'some other secret',
     resave: false,
     saveUninitialized: true
 }));

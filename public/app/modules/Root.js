@@ -5,8 +5,7 @@ angular
     .module('Root', [])
     .controller('RootController', function($scope, $session, $flash) {
 
-        $scope.$on('$routeChangeSuccess', function() {
-
+        $scope.$on('$stateChangeSuccess', function() {
             $scope.token = $session.get('token');
             $scope.user = $session.get('user');
 
@@ -16,8 +15,5 @@ angular
                 warning: $flash.get('warning'),
                 error: $flash.get('error')
             };
-
         });
-
-
     });

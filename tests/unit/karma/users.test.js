@@ -5,14 +5,14 @@
 
 var sandbox;
 var scope;
-var pathStub;
 var sessionStub;
 var flashStub;
-var routeStub;
+var stateStub;
 var reloadStub;
 var mockUserService;
 var result;
 var rootScope;
+var goStub;
 
 describe('Users module', function () {
   beforeEach(function () {
@@ -51,49 +51,44 @@ describe('Users module', function () {
         set: sinon.stub()
       };
 
-      pathStub = sinon.stub();
-      var locationStub = {
-        path: pathStub
-      };
+      goStub = sinon.stub();
 
       reloadStub = sinon.stub();
-      routeStub = {
-        reload: reloadStub
+      stateStub = {
+        reload: reloadStub,
+        go: goStub
       };
 
       scope = $rootScope.$new();
 
       $controller('RegisterController', {
         $scope: scope,
-        $location: locationStub,
         $session: sessionStub,
         $flash: flashStub,
-        $route: routeStub,
+        $state: stateStub,
         UserService: mockUserService
       });
 
       $controller('LoginController', {
         $scope: scope,
-        $location: locationStub,
         $session: sessionStub,
         $flash: flashStub,
-        $route: routeStub,
+        $state: stateStub,
         UserService: mockUserService
       });
 
       $controller('LogoutController', {
         $scope: scope,
-        $location: locationStub,
         $session: sessionStub,
         $flash: flashStub,
-        $route: routeStub
+        $state: stateStub
       });
 
       $controller('ChangePasswordController', {
         $scope: scope,
         $session: sessionStub,
         $flash: flashStub,
-        $route: routeStub,
+        $state: stateStub,
         UserService: mockUserService
       });
     });
@@ -103,7 +98,7 @@ describe('Users module', function () {
     describe('on success', function () {
 
       var user;
-      
+
       beforeEach(function () {
         inject(function ($q) {
           mockUserService.register = function() {
@@ -163,7 +158,7 @@ describe('Users module', function () {
         rootScope.$apply();
 
         // Assert
-        expect(pathStub).to.have.been.calledWithExactly('/');
+        expect(goStub).to.have.been.calledWithExactly('home');
       });
     });
 
@@ -200,7 +195,7 @@ describe('Users module', function () {
         expect(flashStub.set).to.have.been.calledWithExactly('error', 'register.message.error.' + result.data.message);
       });
 
-      it('should reload the current route', function () {
+      it('should reload the current state', function () {
         // Arrange
 
         // Act
@@ -217,7 +212,7 @@ describe('Users module', function () {
     describe('on success', function() {
 
       var user;
-      
+
       beforeEach(function () {
         inject(function ($q) {
           mockUserService.login = function() {
@@ -278,9 +273,9 @@ describe('Users module', function () {
         rootScope.$apply();
 
         // Assert
-        expect(pathStub).to.have.been.calledWithExactly('/');
+        expect(goStub).to.have.been.calledWithExactly('home');
       });
-      
+
     });
 
     describe('on error', function () {
@@ -317,7 +312,7 @@ describe('Users module', function () {
 
       });
 
-      it('should reload the current route', function () {
+      it('should reload the current state', function () {
         // Arrange
 
         // Act
@@ -332,7 +327,7 @@ describe('Users module', function () {
 
   describe('Logout Controller', function() {
     describe('on success', function() {
-      
+
       it('should remove a token from the session', function() {
         // Arrange
 
@@ -367,7 +362,7 @@ describe('Users module', function () {
         expect(flashStub.set).to.have.been.calledWithExactly('info', 'logout.message.success');
       });
 
-      it('should redirect to home page', function () {
+      it('should call state go', function () {
         // Arrange
 
         // Act
@@ -375,29 +370,16 @@ describe('Users module', function () {
         rootScope.$apply();
 
         // Assert
-        expect(pathStub).to.have.been.calledWithExactly('/');
+        expect(goStub).to.have.been.calledOnce; // jshint ignore:line
       });
-
-      it('should reload the current route', function () {
-        // Arrange
-
-        // Act
-        scope.logout();
-        rootScope.$apply();
-
-        // Assert
-        expect(reloadStub).to.have.been.calledOnce; // jshint ignore:line
-      });
-      
     });
-
   });
 
   describe('Change Password Controller', function() {
     describe('on success', function() {
 
       var user;
-      
+
       beforeEach(function () {
         inject(function ($q) {
           mockUserService.changePassword = function() {
@@ -440,7 +422,7 @@ describe('Users module', function () {
         expect(flashStub.set).to.have.been.calledWithExactly('info', 'changepassword.message.success');
       });
 
-      it('should reload the current route', function () {
+      it('should reload the current state', function () {
         // Arrange
 
         // Act
@@ -450,7 +432,7 @@ describe('Users module', function () {
         // Assert
         expect(reloadStub).to.have.been.calledOnce; // jshint ignore:line
       });
-      
+
     });
 
     describe('on error', function () {
@@ -487,7 +469,7 @@ describe('Users module', function () {
 
       });
 
-      it('should reload the current route', function () {
+      it('should reload the current state', function () {
         // Arrange
 
         // Act
