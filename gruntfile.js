@@ -199,7 +199,7 @@ module.exports = function (grunt) {
 
     grunt.registerTask('lint', ['jshint']);
 
-    grunt.registerTask('test', ['env:test', 'test-mocha', 'test-supertest', 'test-karma']);
+    grunt.registerTask('test', ['env:test', 'test-mocha', 'test-supertest', 'test-karma', 'protractor-local']);
 
     grunt.registerTask('test-unit', ['env:test', 'test-mocha', 'test-karma']);
     grunt.registerTask('test-functional', ['env:test', 'test-supertest', 'test-protractor']);
