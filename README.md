@@ -1,3 +1,2 @@
 # NiceJS
-Friendly MEAN Stack Boilerplate . Batteries, grunt, mocha, supertest, karma, protractor and istanbul coverage included. 
-
+Friendly MEAN Stack Boilerplate . Batteries, grunt, mocha, supertest, karma and istanbul coverage included. 
