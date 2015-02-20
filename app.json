@@ -1,7 +1,7 @@
 {
   "name": "Nice.JS",
   "description": "Friendly MEAN Stack Boilerplate",
-  "repository": "https://github.com/NiceJS/nicejs.git",
+  "repository": "https://github.com/NiceJS/nicejs",
   "logo": "https://github.com/NiceJS/nicejs/blob/master/public/img/brand/logo.png",
   "keywords": ["MongoDB", "express", "angular", "node", "MEAN", "NiceJS"],
   "addons": [
