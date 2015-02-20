@@ -20,12 +20,24 @@ module.exports = function (grunt) {
         .concat(watchFiles.configJS);
 
     grunt.initConfig({
+        foreman: {
+            dev: {
+                env: ['.env'],
+                procfile: 'Procfile',
+                port: 3000
+            },
+            test: {
+                env: ['test.env'],
+                procfile: 'Procfile',
+                port: 3002
+            }
+        },
         env: {
-          dev: {
-            NODE_ENV: 'development'
-          },
           test: {
-            NODE_ENV: 'test'
+            NODE_ENV: 'test',
+            MONGOLAB_URI: 'mongodb://localhost:27017/nicejs-test',
+            PORT: 3002,
+            JWT_SECRET: 'test secret'
           }
         },
         pkg: grunt.file.readJSON('package.json'),
@@ -67,14 +79,6 @@ module.exports = function (grunt) {
                         branches: 100
                     },
                     reportFormats: ['text', 'lcov']
-                }
-            }
-        },
-        express: {
-            test: {
-                options: {
-                    script: 'server.js',
-                    node_env: 'test'
                 }
             }
         },
@@ -127,6 +131,8 @@ module.exports = function (grunt) {
     grunt.event.on('coverage', function(lcov, done){
         done();
     });
+
+    grunt.registerTask('start', 'foreman:dev');
 
     grunt.registerTask('default', ['forceOn','lint','test', 'forceOff','watch']);
 

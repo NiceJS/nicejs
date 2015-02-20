@@ -5,12 +5,6 @@ var LocalStrategy = require('passport-local').Strategy;
 
 var jwt = require('jsonwebtoken');
 
-var params = require('../../config/params');
-/* istanbul ignore next */
-if (process.env.NODE_ENV === 'test') {
-  params = require('../../config/params-test');
-}
-
 var users = require('../models/users');
 passport.use(new LocalStrategy(users.authenticate()));
 passport.serializeUser(users.serializeUser());
@@ -31,7 +25,7 @@ user.login = function(req, res) {
           return res.status(401).json({ message: 'user' });
         }
 
-        var token = jwt.sign(user, params.jwt_secret, { expiresInMinutes: 60 });
+        var token = jwt.sign(user, process.env.JWT_SECRET, { expiresInMinutes: 60 });
 
         return res.json({ token: token });
 
@@ -57,7 +51,7 @@ user.register = function(req, res) {
         return res.status(500).json({ message: 'database' });
       }
 
-      var token = jwt.sign(user, params.jwt_secret, { expiresInMinutes: 60 });
+      var token = jwt.sign(user, process.env.JWT_SECRET, { expiresInMinutes: 60 });
 
       return res.json({token: token});
     });
@@ -90,7 +84,7 @@ user.changePassword = function(req, res){
             return res.status(500).json({ message: 'database' });
           }
 
-          var token = jwt.sign(user, params.jwt_secret, { expiresInMinutes: 60 });
+          var token = jwt.sign(user, process.env.JWT_SECRET, { expiresInMinutes: 60 });
 
           return res.json({ token: token });
 

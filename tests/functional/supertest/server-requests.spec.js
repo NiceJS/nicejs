@@ -11,7 +11,6 @@ var request = require('supertest');
 var path = require('path');
 var supertestChai = require('supertest-chai');
 var chai = require('chai');
-var params = require(path.join(process.env.PWD, 'config', 'params-test'));
 var jwt = require('jsonwebtoken');
 chai.use(supertestChai.httpAsserts);
 chai.should();
@@ -148,7 +147,7 @@ describe('server requests', function () {
                             }
 
                             // Assert
-                            var decoded = jwt.verify(res.body.token, params.jwt_secret);
+                            var decoded = jwt.verify(res.body.token, process.env.JWT_SECRET);
 
                             chai.expect(decoded.email).to.equal(correctUser.email);
                             done();
@@ -163,7 +162,7 @@ describe('server requests', function () {
     describe('/api/p/change-password', function() {
         var token;
         beforeEach(function () {
-          token = jwt.sign({ username: correctUser.email }, params.jwt_secret, { expiresInMinutes: 60 });
+          token = jwt.sign({ username: correctUser.email }, process.env.JWT_SECRET, { expiresInMinutes: 60 });
         });
 
         describe('POST', function () {
@@ -250,7 +249,7 @@ describe('server requests', function () {
                             }
 
                             // Assert
-                            var decoded = jwt.verify(res.body.token, params.jwt_secret);
+                            var decoded = jwt.verify(res.body.token, process.env.JWT_SECRET);
 
                             chai.expect(decoded.email).to.equal(correctUser.email);
                             done();

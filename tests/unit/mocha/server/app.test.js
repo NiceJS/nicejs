@@ -41,7 +41,6 @@ describe('app.js', function() {
     var passportInitializeResponse;
 
     var passportSessionStub;
-    var passportSessionResponse;
 
     var compileStylusStub;
 
@@ -88,10 +87,6 @@ describe('app.js', function() {
         passportInitializeResponse = 'my passport initialize stub response';
         passportInitializeStub.returns(passportInitializeResponse);
 
-        passportSessionStub = sinon.stub();
-        passportSessionResponse = 'my passport session stub response';
-        passportSessionStub.returns(passportSessionResponse);
-
         notFoundStub = sinon.stub();
         internalErrStub = sinon.stub();
         internalErrResponse = 'some internal err response';
@@ -118,8 +113,7 @@ describe('app.js', function() {
                 connect: mongooseConnectStub
             },
             'passport': {
-                initialize: passportInitializeStub,
-                session: passportSessionStub,
+                initialize: passportInitializeStub
             },
             './config/errors': {
                 notFound: notFoundStub,
@@ -221,15 +215,6 @@ describe('app.js', function() {
 
         // Assert
         useSpy.should.have.been.calledWithExactly(passportInitializeResponse);
-    });
-
-    it('should initialize sessions for passport', function() {
-        // Arrange
-
-        // Act
-
-        // Assert
-        useSpy.should.have.been.calledWithExactly(passportSessionResponse);
     });
 
     it('should catch 404 and send to error handler', function () {
