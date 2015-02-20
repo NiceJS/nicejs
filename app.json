@@ -1,0 +1,16 @@
+{
+  "name": "Nice.JS",
+  "description": "Friendly MEAN Stack Boilerplate",
+  "repository": "https://github.com/NiceJS/nicejs.git",
+  "logo": "https://github.com/NiceJS/nicejs/blob/master/public/img/brand/logo.png",
+  "keywords": ["MongoDB", "express", "angular", "node", "MEAN", "NiceJS"],
+  "addons": [
+    "mongolab"
+  ],
+  "env": {
+    "JWT_SECRET": {
+      "description": "A secret key for verifying the integrity of user access tokens",
+      "generator": "secret"
+    }
+  },
+}
