@@ -1,5 +1,4 @@
 'use strict';
-/*global angular:true */
 
 /* istanbul ignore next */
 angular

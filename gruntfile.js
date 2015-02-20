@@ -58,7 +58,7 @@ module.exports = function (grunt) {
         uglify: {
           angular: {
             files: {
-              'public/app/app.min.js': watchFiles.clientJS
+              'public/dist/app.min.js': watchFiles.clientJS
             }
           }
         },
@@ -144,7 +144,7 @@ module.exports = function (grunt) {
     grunt.registerTask('default', ['forceOn','lint','test', 'forceOff','watch']);
 
     grunt.registerTask('lint', ['jshint']);
-    grunt.registerTask('minify', ['uglify'])
+    grunt.registerTask('minify', ['uglify']);
 
     grunt.registerTask('test', ['env:test', 'test-unit', 'test-functional']);
 

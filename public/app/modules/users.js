@@ -1,5 +1,4 @@
 'use strict';
-/*global angular:true */
 
 var users = angular.module('Users', []);
 

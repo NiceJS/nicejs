@@ -118,14 +118,15 @@
     "indent": 4,         // Specify indentation spacing
     "globals": {
         "describe": false,
-         "it"         : false,
-         "before"     : false,
-         "beforeEach" : false,
-         "after"      : false,
-         "afterEach"  : false,
-         "browser": false,
-         "expect": false,
-         "element": false,
-         "by": false
+        "it"         : false,
+        "before"     : false,
+        "beforeEach" : false,
+        "after"      : false,
+        "afterEach"  : false,
+        "browser": false,
+        "expect": false,
+        "element": false,
+        "by": false,
+        "angular": false
     }
 }

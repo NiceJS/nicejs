@@ -1,9 +1,8 @@
 'use strict';
-/*global angular:true */
 
 angular
   .module('AuthInterceptor', [])
-    .factory('TokenService', ['$session', '$q', function ($session, $q) {
+    .factory('TokenService',  ['$session', '$q', function ($session, $q) {
       return {
         request: function (config) {
           var token;
@@ -25,4 +24,5 @@ angular
           return response || $q.when(response);
         }
       };
-    }]);
+    }
+  ]);

@@ -1,5 +1,4 @@
 'use strict';
-/*global angular:true */
 
 angular
     .module('Root', [])
