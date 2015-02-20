@@ -3,7 +3,8 @@
 
 var users = angular.module('Users', []);
 
-users.controller('RegisterController', function($scope, $state, $session, $flash, UserService) {
+users.controller('RegisterController', ['$scope', '$state', '$session', '$flash', 'UserService', 
+    function($scope, $state, $session, $flash, UserService) {
   $scope.register = function(user) {
     UserService
       .register(user)
@@ -20,9 +21,10 @@ users.controller('RegisterController', function($scope, $state, $session, $flash
           }
         );
   };
-});
+}]);
 
-users.controller('LoginController', function($scope, $state, $session, $flash, UserService) {
+users.controller('LoginController', ['$scope', '$state', '$session', '$flash', 'UserService', 
+    function($scope, $state, $session, $flash, UserService) {
   $scope.login = function(user) {
     UserService
       .login(user)
@@ -39,19 +41,21 @@ users.controller('LoginController', function($scope, $state, $session, $flash, U
           }
         );
   };
-});
+}]);
 
-users.controller('LogoutController', function($scope, $session, $flash, $state) {
+users.controller('LogoutController', ['$scope', '$session', '$flash', '$state', 
+    function($scope, $session, $flash, $state) {
   $scope.logout = function() {
     $session.remove('token');
     $session.remove('user');
     $flash.set('info', 'logout.message.success');
     $state.go();
   };
-});
+}]);
 
 // TODO: this needs to have authentication service on it.
-users.controller('ChangePasswordController', function($scope, $session, $flash, $state, UserService) {
+users.controller('ChangePasswordController', ['$scope', '$session', '$flash', '$state', 'UserService', 
+    function($scope, $session, $flash, $state, UserService) {
   $scope.changePassword = function(changePasswordData) {
     UserService
       .changePassword(changePasswordData)
@@ -67,7 +71,7 @@ users.controller('ChangePasswordController', function($scope, $session, $flash, 
           }
         );
   };
-});
+}]);
 
 users.factory('UserService', ['$http', function($http) {
   return {

@@ -55,6 +55,13 @@ module.exports = function (grunt) {
                 }
             }
         },
+        uglify: {
+          angular: {
+            files: {
+              'public/app/app.min.js': watchFiles.clientJS
+            }
+          }
+        },
         mochaTest : {
             options: {
                 reporter: 'spec'
@@ -132,11 +139,12 @@ module.exports = function (grunt) {
         done();
     });
 
-    grunt.registerTask('start', 'foreman:dev');
+    grunt.registerTask('start', ['minify', 'foreman:dev']);
 
     grunt.registerTask('default', ['forceOn','lint','test', 'forceOff','watch']);
 
     grunt.registerTask('lint', ['jshint']);
+    grunt.registerTask('minify', ['uglify'])
 
     grunt.registerTask('test', ['env:test', 'test-unit', 'test-functional']);
 

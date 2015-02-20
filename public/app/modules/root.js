@@ -3,7 +3,7 @@
 
 angular
     .module('Root', [])
-    .controller('RootController', function($scope, $session, $flash) {
+    .controller('RootController', ['$scope', '$session', '$flash', function($scope, $session, $flash) {
 
         $scope.$on('$stateChangeSuccess', function() {
             $scope.token = $session.get('token');
@@ -16,4 +16,4 @@ angular
                 error: $flash.get('error')
             };
         });
-    });
+    }]);

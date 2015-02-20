@@ -15,17 +15,12 @@ html
     //- Angular Plugins
     script(src='lib/angular-ui-router/release/angular-ui-router.min.js')
     script(src='lib/angular-flash/dist/angular-flash.min.js')
-    script(src="lib/angular-translate/angular-translate.js")
-    script(src="lib/angular-translate-loader-static-files/angular-translate-loader-static-files.js")
+    script(src="lib/angular-translate/angular-translate.min.js")
+    script(src="lib/angular-translate-loader-static-files/angular-translate-loader-static-files.min.js")
     script(src="lib/angular-simple-storage/dist/angular-simpleStorage.min.js")
 
-    //- Angular Modules
-    script(src="app/modules/root.js")
-    script(src="app/modules/users.js")
-    script(src="app/modules/auth-interceptor.js")
-
     //- Angluar App Registration
-    script(src="app/app.js")
+    script(src="app/app.min.js")
 
   body(ng-app="nicejs" ng-controller="RootController")
     

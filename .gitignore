@@ -12,3 +12,4 @@ npm-debug.log
 *.idea/
 *.vagrant/
 *.DS_Store
+*.min.js

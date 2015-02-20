@@ -11,7 +11,8 @@ angular
         'Root',
         'Users'
     ])
-    .config(function($urlRouterProvider, $stateProvider, $locationProvider, $translateProvider, $httpProvider) {
+    .config(['$urlRouterProvider', '$stateProvider', '$locationProvider', '$translateProvider', '$httpProvider', 
+            function($urlRouterProvider, $stateProvider, $locationProvider, $translateProvider, $httpProvider) {
         $urlRouterProvider.otherwise('/oops');
 
         $stateProvider.state('home', { url: '/', templateUrl: 'views/root/index' });
@@ -30,4 +31,4 @@ angular
         $translateProvider.preferredLanguage('en');
 
         $httpProvider.interceptors.push('TokenService');
-    });
+    }]);
