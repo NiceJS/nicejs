@@ -5,7 +5,8 @@
   "logo": "https://github.com/NiceJS/nicejs/blob/master/public/img/brand/logo.png",
   "keywords": ["MongoDB", "express", "angular", "node", "MEAN", "NiceJS"],
   "addons": [
-    "mongolab"
+    "mongolab",
+    "papertrail"
   ],
   "env": {
     "JWT_SECRET": {
