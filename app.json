@@ -13,5 +13,5 @@
       "description": "A secret key for verifying the integrity of user access tokens",
       "generator": "secret"
     }
-  },
+  }
 }
