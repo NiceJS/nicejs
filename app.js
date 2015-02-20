@@ -7,7 +7,6 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var gracefulExit = require('express-graceful-exit');
 var passport = require('passport');
-var session = require('express-session');
 var stylus = require('stylus');
 var mongoose = require('mongoose');
 var expressJwt = require('express-jwt');
@@ -47,14 +46,7 @@ app.use(stylus.middleware({
 
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use(session({
-    secret: 'some other secret',
-    resave: false,
-    saveUninitialized: true
-}));
-
 app.use(passport.initialize());
-app.use(passport.session());
 
 app.use(router);
 
