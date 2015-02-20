@@ -7,3 +7,9 @@ dependencies:
 general:
   artifacts:
     - "tests/coverage"
+
+deployment:
+  live:
+    branch: master
+    heroku:
+      appname: nicejs
