@@ -3,7 +3,6 @@
 
 var path = require('path');
 var user = require(path.join(process.env.PWD, 'app', 'controllers', 'user'));
-var params = require(path.join(process.env.PWD, 'config', 'params-test'));
 var jwt = require('jsonwebtoken');
 var proxyquire = require('proxyquire');
 
@@ -247,7 +246,7 @@ describe('#user', function() {
           user.login(req, res, next);
           // Assert
           var returnedToken = jsonStub.lastCall.args[0].token;
-          var decoded = jwt.verify(returnedToken, params.jwt_secret);
+          var decoded = jwt.verify(returnedToken, process.env.JWT_SECRET);
 
           chai.expect(decoded).to.equal(ruser);
         });
@@ -364,7 +363,7 @@ describe('#user', function() {
           user.register(req, res);
           // Assert
           var returnedToken = jsonStub.lastCall.args[0].token;
-          var decoded = jwt.verify(returnedToken, params.jwt_secret);
+          var decoded = jwt.verify(returnedToken, process.env.JWT_SECRET);
 
           chai.expect(decoded.username).to.equal(ruser.username);
         });
@@ -382,7 +381,7 @@ describe('#user', function() {
           user.register(req, res);
           // Assert
           var returnedToken = jsonStub.lastCall.args[0].token;
-          var decoded = jwt.verify(returnedToken, params.jwt_secret);
+          var decoded = jwt.verify(returnedToken, process.env.JWT_SECRET);
 
           chai.expect(decoded.password).to.not.exist;
         });
@@ -713,7 +712,7 @@ describe('#user', function() {
             var arg = jwtSigninStub.lastCall.args;
 
             // Assert
-            arg[1].should.eql(params.jwt_secret);
+            arg[1].should.eql(process.env.JWT_SECRET);
         });
 
         it('should generate a token setting the expiry for 60 minutes', function () {
