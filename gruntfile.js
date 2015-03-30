@@ -164,7 +164,7 @@ module.exports = function (grunt) {
         done();
     });
 
-    grunt.registerTask('default', ['minify', 'foreman:dev']);
+    grunt.registerTask('default', ['build', 'foreman:dev']);
 
     grunt.registerTask('test-watch', ['forceOn','lint','test', 'forceOff','watch']);
 
