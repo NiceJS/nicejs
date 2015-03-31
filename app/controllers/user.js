@@ -2,10 +2,10 @@
 
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
-
 var jwt = require('jsonwebtoken');
+var rek = require('rekuire');
+var users = rek('users-model');
 
-var users = require('../models/users');
 passport.use(new LocalStrategy(users.authenticate()));
 passport.serializeUser(users.serializeUser());
 passport.deserializeUser(users.deserializeUser());

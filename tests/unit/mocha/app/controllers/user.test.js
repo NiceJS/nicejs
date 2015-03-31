@@ -1,8 +1,7 @@
 'use strict';
 /*jshint expr: true*/
 
-var path = require('path');
-var user = require(path.join(process.env.PWD, 'app', 'controllers', 'user'));
+var rek = require('rekuire');
 var jwt = require('jsonwebtoken');
 var proxyquire = require('proxyquire');
 
@@ -11,6 +10,8 @@ var sinonChai = require('sinon-chai');
 var chai = require('chai');
 chai.should();
 chai.use(sinonChai);
+
+var user;
 
 describe('#user', function() {
 
@@ -43,11 +44,11 @@ describe('#user', function() {
             strategyStub.withArgs(localStrategyStub).returns(strategyResponse);
 
             passportUseStub = sinon.stub();
-            passportUseResponse = function () {};
+            passportUseResponse = function() {};
             passportUseStub.returns(passportUseResponse);
 
             passportAuthenticateStub = sinon.stub();
-            passportAuthenticateResponse = function () {};
+            passportAuthenticateResponse = function() {};
             passportAuthenticateStub.returns(passportAuthenticateResponse);
 
             passportSerializeUserStub = sinon.stub();
@@ -57,8 +58,8 @@ describe('#user', function() {
             serializeUserStub = sinon.stub();
             deserializeUserStub = sinon.stub();
 
-            user = proxyquire(path.join(process.env.PWD, 'app', 'controllers', 'user'), {
-                'passport': {
+            var stubs = {
+                passport: {
                     use: passportUseStub,
                     authenticate: passportAuthenticateStub,
                     serializeUser: passportSerializeUserStub,
@@ -66,13 +67,16 @@ describe('#user', function() {
                 },
                 'passport-local': {
                     Strategy: strategyStub
-                },
-                '../models/users': {
-                    authenticate: authenticateStub,
-                    serializeUser: serializeUserStub,
-                    deserializeUser: deserializeUserStub
                 }
-            });
+            };
+
+            stubs[rek.path('users-model')] = {
+                authenticate: authenticateStub,
+                serializeUser: serializeUserStub,
+                deserializeUser: deserializeUserStub
+            };
+
+            user = proxyquire(rek.path('user'), stubs);
         });
 
         it('should use a new passport local strategy', function() {
@@ -129,7 +133,8 @@ describe('#user', function() {
 
             obj = {
                 status: statusStub,
-                json: jsonStub
+                json: jsonStub,
+                end: sinon.stub()
             };
 
             statusStub.returns(obj);
@@ -140,19 +145,21 @@ describe('#user', function() {
             next = function() {};
 
             passportUseStub = sinon.stub();
-            passportUseResponse = function () {};
+            passportUseResponse = function() {};
             passportUseStub.returns(passportUseResponse);
 
             passportAuthenticateStub = sinon.stub();
-            passportAuthenticateResponse = function () {};
+            passportAuthenticateResponse = function() {};
             passportAuthenticateStub.returns(passportAuthenticateResponse);
+
+            strategyStub = sinon.stub();
 
             serializeUserStub = sinon.stub();
             deserializeUserStub = sinon.stub();
             returnUserStub = sinon.stub();
 
-            user = proxyquire(path.join(process.env.PWD, 'app', 'controllers', 'user'), {
-                'passport': {
+            user = proxyquire(rek.path('user'), {
+                passport: {
                     use: passportUseStub,
                     authenticate: passportAuthenticateStub,
                     serializeUser: serializeUserStub,
@@ -191,15 +198,6 @@ describe('#user', function() {
             statusStub.should.have.been.calledWithExactly(500);
         });
 
-        it('should return a json message of `database` when an error occurs with passport authenticate', function() {
-            // Arrange
-            passportAuthenticateStub.yields('err', null);
-            // Act
-            user.login(req, res, next);
-            // Assert
-            jsonStub.should.have.been.calledWithExactly({ message: 'database' });
-        });
-
         it('should return a status of 401 when passport authenticate doesn\'t find a user', function() {
             // Arrange
             passportAuthenticateStub.yields(null, null);
@@ -207,15 +205,6 @@ describe('#user', function() {
             user.login(req, res, next);
             // Assert
             statusStub.should.have.been.calledWithExactly(401);
-        });
-
-        it('should return a json message of `user` when passport authenticate doesn\'t find a user', function() {
-            // Arrange
-            passportAuthenticateStub.yields(null, null);
-            // Act
-            user.login(req, res, next);
-            // Assert
-            jsonStub.should.have.been.calledWithExactly({ message: 'user' });
         });
 
         it('should not set res.user to be the returned user when passport authenticate succeeds', function() {
@@ -229,26 +218,26 @@ describe('#user', function() {
         });
 
         it('should return a jwt token when passport authenticate succeeds', function() {
-          // Arrange
-          var ruser = 'this is the returned user';
-          passportAuthenticateStub.yields(null, ruser);
-          // Act
-          user.login(req, res, next);
-          // Assert
-          chai.expect(jsonStub.lastCall.args[0].token).to.exist;
+            // Arrange
+            var ruser = 'this is the returned user';
+            passportAuthenticateStub.yields(null, ruser);
+            // Act
+            user.login(req, res, next);
+            // Assert
+            chai.expect(jsonStub.lastCall.args[0].token).to.exist;
         });
 
-        it('should return a jwt token that encapsulates the user object', function () {
-          // Arrange
-          var ruser = 'this is the returned user';
-          passportAuthenticateStub.yields(null, ruser);
-          // Act
-          user.login(req, res, next);
-          // Assert
-          var returnedToken = jsonStub.lastCall.args[0].token;
-          var decoded = jwt.verify(returnedToken, process.env.JWT_SECRET);
+        it('should return a jwt token that encapsulates the user object', function() {
+            // Arrange
+            var ruser = 'this is the returned user';
+            passportAuthenticateStub.yields(null, ruser);
+            // Act
+            user.login(req, res, next);
+            // Assert
+            var returnedToken = jsonStub.lastCall.args[0].token;
+            var decoded = jwt.verify(returnedToken, process.env.JWT_SECRET);
 
-          chai.expect(decoded).to.equal(ruser);
+            chai.expect(decoded).to.equal(ruser);
         });
     });
 
@@ -257,7 +246,6 @@ describe('#user', function() {
         var req;
         var res;
 
-        var authoriseUserStub;
         var usersStub;
         var saveStub;
         var getStub;
@@ -272,7 +260,8 @@ describe('#user', function() {
             obj = {
                 user: 'blank user',
                 status: statusStub,
-                json: jsonStub
+                json: jsonStub,
+                end: sinon.stub()
             };
 
             statusStub.returns(obj);
@@ -304,18 +293,7 @@ describe('#user', function() {
             statusStub.should.have.been.calledWithExactly(401);
         });
 
-        it('should return a json message of `password` when passwords do not match', function() {
-            // Arrange
-            req.body.repeat_password = 'passwordMismatch';
-
-            // Act
-            user.register(req, res);
-
-            // Assert
-            jsonStub.should.have.been.calledWithExactly({ message: 'password' });
-        });
-
-        it('should return a status of 500 when an error occurs saving user', function () {
+        it('should return a status of 500 when an error occurs saving user', function() {
             // Arrange
 
             // Act
@@ -323,18 +301,6 @@ describe('#user', function() {
 
             // Assert
             statusStub.should.have.been.calledWithExactly(500);
-        });
-
-        // Added skip due to proxyquire issue thlorenz/proxyquire#42
-        it.skip('should return a json message of `database` when an error occurs saving user', function() {
-            // Arrange
-            saveStub.yields('err', null);
-
-            // Act
-            user.register(req, res);
-
-            // Assert
-            jsonStub.should.have.been.calledWithExactly({ message: 'database' });
         });
 
         // Added skip due to proxyquire issue thlorenz/proxyquire#42
@@ -352,38 +318,38 @@ describe('#user', function() {
 
         // Added skip due to proxyquire issue thlorenz/proxyquire#42
         it.skip('returned token should contain username when new user saves correctly', function() {
-          // Arrange
-          var ruser = {
-            username: 'bob',
-            password: 'notsteve'
-          };
+            // Arrange
+            var ruser = {
+                username: 'bob',
+                password: 'notsteve'
+            };
 
-          saveStub.yields(null, ruser);
-          // Act
-          user.register(req, res);
-          // Assert
-          var returnedToken = jsonStub.lastCall.args[0].token;
-          var decoded = jwt.verify(returnedToken, process.env.JWT_SECRET);
+            saveStub.yields(null, ruser);
+            // Act
+            user.register(req, res);
+            // Assert
+            var returnedToken = jsonStub.lastCall.args[0].token;
+            var decoded = jwt.verify(returnedToken, process.env.JWT_SECRET);
 
-          chai.expect(decoded.username).to.equal(ruser.username);
+            chai.expect(decoded.username).to.equal(ruser.username);
         });
 
         // Added skip due to proxyquire issue thlorenz/proxyquire#42
-        it.skip('returned token should not contain password when new user saves correctly', function () {
-          // Arrange
-          var ruser = {
-            username: 'bob',
-            password: 'notsteve'
-          };
+        it.skip('returned token should not contain password when new user saves correctly', function() {
+            // Arrange
+            var ruser = {
+                username: 'bob',
+                password: 'notsteve'
+            };
 
-          saveStub.yields(null, ruser);
-          // Act
-          user.register(req, res);
-          // Assert
-          var returnedToken = jsonStub.lastCall.args[0].token;
-          var decoded = jwt.verify(returnedToken, process.env.JWT_SECRET);
+            saveStub.yields(null, ruser);
+            // Act
+            user.register(req, res);
+            // Assert
+            var returnedToken = jsonStub.lastCall.args[0].token;
+            var decoded = jwt.verify(returnedToken, process.env.JWT_SECRET);
 
-          chai.expect(decoded.password).to.not.exist;
+            chai.expect(decoded.password).to.not.exist;
         });
     });
 
@@ -436,7 +402,8 @@ describe('#user', function() {
             obj = {
                 user: 'blank user',
                 status: statusStub,
-                json: jsonStub
+                json: jsonStub,
+                end: sinon.stub()
             };
 
             statusStub.returns(obj);
@@ -445,11 +412,11 @@ describe('#user', function() {
             res = obj;
 
             passportUseStub = sinon.stub();
-            passportUseResponse = function () {};
+            passportUseResponse = function() {};
             passportUseStub.returns(passportUseResponse);
 
             passportAuthenticateStub = sinon.stub();
-            passportAuthenticateResponse = function () {};
+            passportAuthenticateResponse = function() {};
             passportAuthenticateStub.returns(passportAuthenticateResponse);
 
             serializeUserStub = sinon.stub();
@@ -460,8 +427,8 @@ describe('#user', function() {
             jwtSigninResponse = 'This is the generated token';
             jwtSigninStub.returns(jwtSigninResponse);
 
-            user = proxyquire(path.join(process.env.PWD, 'app', 'controllers', 'user'), {
-                'passport': {
+            user = proxyquire(rek.path('user'), {
+                passport: {
                     use: passportUseStub,
                     authenticate: passportAuthenticateStub,
                     serializeUser: serializeUserStub,
@@ -470,7 +437,7 @@ describe('#user', function() {
                 'passport-local': {
                     Strategy: strategyStub
                 },
-                'jsonwebtoken': {
+                jsonwebtoken: {
                     sign: jwtSigninStub
                 }
             });
@@ -485,17 +452,6 @@ describe('#user', function() {
 
             // Assert
             statusStub.should.have.been.calledWithExactly(401);
-        });
-
-        it('should return a json message of `password` when passwords do not match', function() {
-            // Arrange
-            req.body.repeat_password = 'passwordMismatch';
-
-            // Act
-            user.changePassword(req, res);
-
-            // Assert
-            jsonStub.should.have.been.calledWithExactly({ message: 'matchpassword' });
         });
 
         it('should use passport middleware with local as the strategy', function() {
@@ -520,7 +476,7 @@ describe('#user', function() {
             arg[1].should.be.a('function');
         });
 
-        it('should return a status of 500 when an error occurs finding user', function () {
+        it('should return a status of 500 when an error occurs finding user', function() {
             // Arrange
             passportAuthenticateStub.yields('err', 'user');
 
@@ -531,18 +487,7 @@ describe('#user', function() {
             statusStub.should.have.been.calledWithExactly(500);
         });
 
-        it('should return a json message of `database` when an error occurs finding user', function() {
-            // Arrange
-            passportAuthenticateStub.yields('err', 'user');
-
-            // Act
-            user.changePassword(req, res);
-
-            // Assert
-            jsonStub.should.have.been.calledWithExactly({ message: 'database' });
-        });
-
-        it('should return a status of 401 when a user is not found', function () {
+        it('should return a status of 401 when a user is not found', function() {
             // Arrange
             passportAuthenticateStub.yields(null, null);
 
@@ -551,17 +496,6 @@ describe('#user', function() {
 
             // Assert
             statusStub.should.have.been.calledWithExactly(401);
-        });
-
-        it('should return a json message of `database` when a user is not found', function() {
-            // Arrange
-            passportAuthenticateStub.yields(null, null);
-
-            // Act
-            user.changePassword(req, res);
-
-            // Assert
-            jsonStub.should.have.been.calledWithExactly({ message: 'user' });
         });
 
         it('should set user.setPassword to be the new password when password match succeeds', function() {
@@ -596,7 +530,7 @@ describe('#user', function() {
             arg[1].should.be.a('function');
         });
 
-        it('should return a status of 500 when a users fails to set new password', function () {
+        it('should return a status of 500 when a users fails to set new password', function() {
             // Arrange
             var ruser = {
                 setPassword: setPasswordStub,
@@ -610,22 +544,6 @@ describe('#user', function() {
 
             // Assert
             statusStub.should.have.been.calledWithExactly(500);
-        });
-
-        it('should return a json message of `database` when a users fails to set new password', function () {
-            // Arrange
-            var ruser = {
-                setPassword: setPasswordStub,
-                save: saveStub
-            };
-            passportAuthenticateStub.yields(null, ruser);
-            setPasswordStub.yields('err', null);
-
-            // Act
-            user.changePassword(req, res);
-
-            // Assert
-            jsonStub.should.have.been.calledWithExactly({ message: 'database' });
         });
 
         it('should yield to a function when saving the user', function() {
@@ -645,7 +563,7 @@ describe('#user', function() {
             arg[0].should.be.a('function');
         });
 
-        it('should return a status of 500 when a users fails to save updated user', function () {
+        it('should return a status of 500 when a users fails to save updated user', function() {
             // Arrange
             var ruser = {
                 setPassword: setPasswordStub,
@@ -662,24 +580,7 @@ describe('#user', function() {
             statusStub.should.have.been.calledWithExactly(500);
         });
 
-        it('should return a json message of `database` when a users fails to save updated user', function () {
-            // Arrange
-            var ruser = {
-                setPassword: setPasswordStub,
-                save: saveStub
-            };
-            passportAuthenticateStub.yields(null, ruser);
-            setPasswordStub.yields(null, ruser);
-            saveStub.yields('err');
-
-            // Act
-            user.changePassword(req, res);
-
-            // Assert
-            jsonStub.should.have.been.calledWithExactly({ message: 'database' });
-        });
-
-        it('should generate a token passing in the user', function () {
+        it('should generate a token passing in the user', function() {
             // Arrange
             var ruser = {
                 setPassword: setPasswordStub,
@@ -697,7 +598,7 @@ describe('#user', function() {
             arg[0].should.eql(ruser);
         });
 
-        it('should generate a token passing in the jwt_secret', function () {
+        it('should generate a token passing in the jwt_secret', function() {
             // Arrange
             var ruser = {
                 setPassword: setPasswordStub,
@@ -715,7 +616,7 @@ describe('#user', function() {
             arg[1].should.eql(process.env.JWT_SECRET);
         });
 
-        it('should generate a token setting the expiry for 60 minutes', function () {
+        it('should generate a token setting the expiry for 60 minutes', function() {
             // Arrange
             var ruser = {
                 setPassword: setPasswordStub,
@@ -733,7 +634,7 @@ describe('#user', function() {
             arg[2].should.eql({ expiresInMinutes: 60 });
         });
 
-        it('should return a token containing the updated user details', function () {
+        it('should return a token containing the updated user details', function() {
             // Arrange
             var ruser = {
                 setPassword: setPasswordStub,
@@ -747,9 +648,8 @@ describe('#user', function() {
             user.changePassword(req, res);
 
             // Assert
-            jsonStub.should.have.been.calledWithExactly({ token: jwtSigninResponse });
+            var arg = jsonStub.lastCall.args[0];
+            arg.token.should.equal(jwtSigninResponse);
         });
-
     });
-
 });
