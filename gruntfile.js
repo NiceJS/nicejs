@@ -75,6 +75,7 @@ module.exports = function (grunt) {
         'string-replace': {
             inline: {
                 files: {
+                    'public/lib/bootstrap-material-design/less/_colors.less': 'public/lib/bootstrap-material-design/less/_colors.less',
                     'public/lib/bootstrap-material-design/less/_variables.less': 'public/lib/bootstrap-material-design/less/_variables.less'
                 },
                 options: {
@@ -82,6 +83,10 @@ module.exports = function (grunt) {
                         {
                             pattern: '@primary: @teal;',
                             replacement: '@primary: @indigo-900;'
+                        },
+                        {
+                            pattern: '@inverse: @indigo;',
+                            replacement: '@inverse: @white;'
                         }
                     ]
                 }
