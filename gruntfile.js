@@ -62,6 +62,36 @@ module.exports = function (grunt) {
             }
           }
         },
+        less: {
+            compile: {
+                options: {
+                    compress: true
+                },
+                files: {
+                    'public/lib/bootstrap-material-design/dist/css/material.min.css': 'public/lib/bootstrap-material-design/less/material.less'
+                }
+            }
+        },
+        'string-replace': {
+            inline: {
+                files: {
+                    'public/lib/bootstrap-material-design/less/_colors.less': 'public/lib/bootstrap-material-design/less/_colors.less',
+                    'public/lib/bootstrap-material-design/less/_variables.less': 'public/lib/bootstrap-material-design/less/_variables.less'
+                },
+                options: {
+                    replacements: [
+                        {
+                            pattern: '@primary: @teal;',
+                            replacement: '@primary: @indigo-900;'
+                        },
+                        {
+                            pattern: '@inverse: @indigo;',
+                            replacement: '@inverse: @white;'
+                        }
+                    ]
+                }
+            }
+        },
         mochaTest : {
             options: {
                 reporter: 'spec'
@@ -139,12 +169,14 @@ module.exports = function (grunt) {
         done();
     });
 
-    grunt.registerTask('start', ['minify', 'foreman:dev']);
+    grunt.registerTask('default', ['build', 'foreman:dev']);
 
-    grunt.registerTask('default', ['forceOn','lint','test', 'forceOff','watch']);
+    grunt.registerTask('test-watch', ['forceOn','lint','test', 'forceOff','watch']);
 
     grunt.registerTask('lint', ['jshint']);
     grunt.registerTask('minify', ['uglify']);
+    grunt.registerTask('bootstrap', ['string-replace', 'less']);
+    grunt.registerTask('build', ['minify', 'bootstrap']);
 
     grunt.registerTask('test', ['env:test', 'test-unit', 'test-functional']);
 
