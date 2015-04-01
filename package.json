@@ -22,7 +22,7 @@
   "scripts": {
     "start": "grunt start",
     "test": "grunt test",
-    "postinstall": "node_modules/grunt-cli/bin/grunt build && bower update"
+    "postinstall": "bower update && node_modules/grunt-cli/bin/grunt build"
   },
   "dependencies": {
     "angular-route": "^1.3.8",
