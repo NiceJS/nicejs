@@ -1,8 +1,13 @@
 dependencies:
   pre:
+    - sudo apt-get update; sudo apt-get install mongodb-org
     - npm install istanbul -g
     - npm install
     - grunt lint
+
+machine:
+  node:
+    version: 0.12.0
 
 general:
   artifacts:
