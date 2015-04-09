@@ -1,24 +1,25 @@
-div
+.container
+    .row
+        .col-sm-12
+            h2.page-header.form-signin-heading {{ 'login.title' | translate }}
 
-  h2.page-header.form-signin-heading {{ 'login.title' | translate }}
-
-  include ../partials/flash.jade
+            include ../partials/flash.jade
   
-  form.form-horizontal(ng-controller="LoginController", name="loginForm" role='form' novalidate)
-    div.form-group
-      label.col-sm-2.control-label {{ 'login.form.input.username' | translate }}
-      div.col-sm-10
-        input.form-control(ng-model='user.username', name="username", type="email", placeholder='Enter Email Address' required)
-        span.text-danger(ng-show='loginForm.username.$dirty && loginForm.username.$error.required') {{ 'login.form.error.username.required' | translate }}
-        span.text-danger(ng-show='loginForm.username.$dirty && loginForm.username.$error.email') {{ 'login.form.error.username.email' | translate }}
+            form.form-horizontal(ng-controller="LoginController", name="loginForm" role='form' novalidate)
+                div.form-group
+                    label.col-sm-2.control-label {{ 'login.form.input.username' | translate }}
+                    div.col-sm-10
+                        input.form-control(ng-model='user.username', name="username", type="email", placeholder='Enter Email Address' required)
+                        span.text-danger(ng-show='loginForm.username.$dirty && loginForm.username.$error.required') {{ 'login.form.error.username.required' | translate }}
+                        span.text-danger(ng-show='loginForm.username.$dirty && loginForm.username.$error.email') {{ 'login.form.error.username.email' | translate }}
 
-    div.form-group
-      label.col-sm-2.control-label {{ 'login.form.input.password' | translate }}
-      div.col-sm-10
-        input.form-control(ng-model='user.password', name="password", type="password", ng-minlength='6', placeholder='Password' required)
-        span.text-danger(ng-show='loginForm.password.$dirty && loginForm.password.$error.required') {{ 'login.form.error.password.required' | translate }}
-        span.text-danger(ng-show='loginForm.password.$dirty && loginForm.password.$error.minlength') {{ 'login.form.error.password.minlength' | translate }}
+                div.form-group
+                    label.col-sm-2.control-label {{ 'login.form.input.password' | translate }}
+                    div.col-sm-10
+                        input.form-control(ng-model='user.password', name="password", type="password", ng-minlength='6', placeholder='Password' required)
+                        span.text-danger(ng-show='loginForm.password.$dirty && loginForm.password.$error.required') {{ 'login.form.error.password.required' | translate }}
+                        span.text-danger(ng-show='loginForm.password.$dirty && loginForm.password.$error.minlength') {{ 'login.form.error.password.minlength' | translate }}
         
-    div.form-group
-      div.col-sm-offset-2.col-sm-10
-        button.btn.btn-primary(ng-click="login(user)", name="loginBtn", ng-disabled="loginForm.$invalid") {{ 'login.form.button.submit' | translate }}
+                div.form-group
+                    div.col-sm-offset-2.col-sm-10
+                        button.btn.btn-primary(ng-click="login(user)", name="loginBtn", ng-disabled="loginForm.$invalid") {{ 'login.form.button.submit' | translate }}

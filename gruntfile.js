@@ -22,7 +22,7 @@ module.exports = function (grunt) {
     grunt.initConfig({
         foreman: {
             dev: {
-                env: ['.env'],
+                env: ['dev.env'],
                 procfile: 'Procfile',
                 port: 3000
             },
@@ -82,7 +82,7 @@ module.exports = function (grunt) {
                     replacements: [
                         {
                             pattern: '@primary: @teal;',
-                            replacement: '@primary: @indigo-900;'
+                            replacement: '@primary: @blue-grey-300;'
                         },
                         {
                             pattern: '@inverse: @indigo;',
