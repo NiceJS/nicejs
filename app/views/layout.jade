@@ -1,8 +1,9 @@
 doctype html
 html
   head
-    title= title
+    title NiceJs
     base(href="/")
+    meta(name='viewport' content='width=device-width, initial-scale=1, maximum-scale=1')
 
     link(rel='icon', type='image/png', href='/img/brand/favicon.ico')
 
@@ -27,9 +28,7 @@ html
     
     include ./partials/navbar.jade
 
-    .container
-      .row
-        .col-sm-12(ui-view)
+    div(ui-view)
 
     script(src='/lib/jquery/dist/jquery.min.js')
     script(src='/lib/bootstrap/dist/js/bootstrap.min.js')
